@@ -337,83 +337,92 @@
     }
 
     .how-header {
-      margin-bottom: 72px;
+      margin-bottom: 80px;
     }
 
     .steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      left: 80px;
+      top: 60px;
+      bottom: 60px;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent 0%, var(--accent-border) 10%, var(--accent-border) 90%, transparent 100%);
     }
 
     .step {
-      background: var(--bg-2);
-      padding: 48px 40px;
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 60px;
+      padding: 60px 0;
       position: relative;
-      transition: background 0.3s;
-      overflow: hidden;
+      transition: transform 0.3s ease;
     }
 
-    .step::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 2px;
-      height: 0;
-      background: var(--accent);
-      transition: height 300ms ease-out;
+    .step:nth-child(2) {
+      padding-left: 140px;
+    }
+
+    .step:nth-child(3) {
+      padding-left: 280px;
     }
 
     .step:hover {
-      background: var(--bg-3);
-    }
-
-    .step:hover::before {
-      height: 100%;
+      transform: translateX(12px);
     }
 
     .step-num {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 11px;
+      font-size: 120px;
       font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 28px;
+      line-height: 1;
+      color: transparent;
+      -webkit-text-stroke: 1.5px var(--accent-border);
+      text-stroke: 1.5px var(--accent-border);
+      opacity: 0.5;
+      user-select: none;
+      transition: all 0.3s ease;
+    }
+
+    .step:hover .step-num {
+      opacity: 1;
+      -webkit-text-stroke: 1.5px var(--accent);
+      text-stroke: 1.5px var(--accent);
     }
 
     .step-icon {
-      width: 40px;
-      height: 40px;
-      border: 1px solid var(--border-hover);
-      border-radius: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
-      color: var(--accent);
-      background: var(--accent-dim);
+      display: none;
+    }
+
+    .step-content {
+      padding-top: 12px;
     }
 
     .step h3 {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: 22px;
+      font-size: 28px;
       font-weight: 700;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       color: var(--text);
-      margin-bottom: 12px;
+      margin-bottom: 16px;
+      line-height: 1.2;
     }
 
     .step p {
-      font-size: 14px;
+      font-size: 16px;
       color: var(--text-muted);
       line-height: 1.7;
-      font-weight: 300;
+      font-weight: 400;
+      max-width: 520px;
     }
 
     /* ---- WHY SECTION ---- */
@@ -844,7 +853,15 @@
       section { padding: 80px 20px; }
       .hero { padding: 100px 20px 60px; }
       .hero-stats { gap: 28px; }
-      .steps { grid-template-columns: 1fr; }
+      .steps::before { display: none; }
+      .step {
+        grid-template-columns: 60px 1fr;
+        gap: 20px;
+        padding: 40px 0 !important;
+      }
+      .step-num { font-size: 56px; }
+      .step h3 { font-size: 22px; }
+      .step p { font-size: 15px; }
       .why-grid { grid-template-columns: 1fr; gap: 48px; }
       .why-right { position: static; }
       .testimonials { grid-template-columns: 1fr; }
@@ -944,27 +961,24 @@
     <div class="steps reveal">
       <div class="step">
         <div class="step-num">01</div>
-        <div class="step-icon">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        <div class="step-content">
+          <h3>Onboard in 24 hours</h3>
+          <p>Tell us your target market, price range, and availability. We set up your dedicated outreach pipeline and start sourcing leads immediately.</p>
         </div>
-        <h3>Onboard in 24 hours</h3>
-        <p>Tell us your target market, price range, and availability. We set up your dedicated outreach pipeline and start sourcing leads immediately.</p>
       </div>
       <div class="step">
         <div class="step-num">02</div>
-        <div class="step-icon">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <div class="step-content">
+          <h3>We qualify every lead</h3>
+          <p>Our team verifies intent, timeline, and readiness before booking. No tire-kickers. Every appointment is a real prospect in your area with genuine need.</p>
         </div>
-        <h3>We qualify every lead</h3>
-        <p>Our team verifies intent, timeline, and readiness before booking. No tire-kickers. Every appointment is a real prospect in your area with genuine need.</p>
       </div>
       <div class="step">
         <div class="step-num">03</div>
-        <div class="step-icon">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        <div class="step-content">
+          <h3>Show up and close</h3>
+          <p>Appointments land on your calendar. We handle all confirmation calls, reminder texts, and follow-ups to ensure maximum show rate. You just close.</p>
         </div>
-        <h3>Show up and close</h3>
-        <p>Appointments land on your calendar. We handle all confirmation calls, reminder texts, and follow-ups to ensure maximum show rate. You just close.</p>
       </div>
     </div>
   </section>
