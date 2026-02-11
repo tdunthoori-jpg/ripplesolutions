@@ -37,6 +37,24 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+      position: relative;
+    }
+
+    /* INTERACTIVE RIPPLE CANVAS */
+    #ripple-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.4;
+    }
+
+    body > * {
+      position: relative;
+      z-index: 1;
     }
 
     @media (min-width: 768px) {
@@ -1248,6 +1266,9 @@
   </style>
 </head>
 <body>
+  <!-- INTERACTIVE RIPPLE BACKGROUND -->
+  <canvas id="ripple-canvas"></canvas>
+
   <div id="cursor-follower"></div>
 
   <!-- NAV -->
@@ -1594,6 +1615,105 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 0. INTERACTIVE RIPPLE BACKGROUND
+    const rippleCanvas = document.getElementById('ripple-canvas');
+    const rippleCtx = rippleCanvas.getContext('2d');
+    let ripples = [];
+    let mouseX = 0;
+    let mouseY = 0;
+    let lastRippleTime = 0;
+
+    // Set canvas size
+    function resizeRippleCanvas() {
+      rippleCanvas.width = window.innerWidth;
+      rippleCanvas.height = window.innerHeight;
+    }
+    resizeRippleCanvas();
+    window.addEventListener('resize', resizeRippleCanvas);
+
+    // Ripple class
+    class Ripple {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.radius = 0;
+        this.maxRadius = Math.random() * 100 + 150;
+        this.speed = Math.random() * 2 + 1.5;
+        this.alpha = 0.6;
+        this.decay = 0.008;
+        this.lineWidth = Math.random() * 1.5 + 0.5;
+        this.hue = 200 + Math.random() * 40; // Blue-cyan tones
+      }
+
+      update() {
+        this.radius += this.speed;
+        this.alpha -= this.decay;
+        return this.alpha > 0;
+      }
+
+      draw() {
+        rippleCtx.save();
+        rippleCtx.beginPath();
+        rippleCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        rippleCtx.strokeStyle = `hsla(${this.hue}, 70%, 60%, ${this.alpha})`;
+        rippleCtx.lineWidth = this.lineWidth;
+        rippleCtx.stroke();
+        rippleCtx.restore();
+
+        // Inner glow
+        rippleCtx.save();
+        rippleCtx.beginPath();
+        rippleCtx.arc(this.x, this.y, this.radius * 0.7, 0, Math.PI * 2);
+        const gradient = rippleCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius * 0.7);
+        gradient.addColorStop(0, `hsla(${this.hue}, 80%, 70%, ${this.alpha * 0.3})`);
+        gradient.addColorStop(1, `hsla(${this.hue}, 70%, 60%, 0)`);
+        rippleCtx.fillStyle = gradient;
+        rippleCtx.fill();
+        rippleCtx.restore();
+      }
+    }
+
+    // Track mouse movement
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY + window.scrollY;
+
+      const now = Date.now();
+      // Create ripple every 80ms when moving
+      if (now - lastRippleTime > 80) {
+        ripples.push(new Ripple(e.clientX, e.clientY));
+        lastRippleTime = now;
+      }
+    });
+
+    // Click to create larger ripple
+    document.addEventListener('click', (e) => {
+      for (let i = 0; i < 3; i++) {
+        setTimeout(() => {
+          const ripple = new Ripple(e.clientX, e.clientY);
+          ripple.maxRadius = 200 + i * 50;
+          ripple.alpha = 0.8;
+          ripple.decay = 0.006;
+          ripples.push(ripple);
+        }, i * 100);
+      }
+    });
+
+    // Animation loop
+    function animateRipples() {
+      rippleCtx.clearRect(0, 0, rippleCanvas.width, rippleCanvas.height);
+
+      // Update and draw ripples
+      ripples = ripples.filter(ripple => {
+        const alive = ripple.update();
+        if (alive) ripple.draw();
+        return alive;
+      });
+
+      requestAnimationFrame(animateRipples);
+    }
+    animateRipples();
 
     // 1. HERO RIPPLE CANVAS
     const canvas = document.getElementById('ripple-canvas');
