@@ -71,6 +71,34 @@
       display: none;
     }
 
+    /* IDLE RIPPLE EFFECT (triggers on cursor pause) */
+    .idle-ripple {
+      position: fixed;
+      border-radius: 50%;
+      border: 2px solid rgba(212, 165, 116, 0.6);
+      pointer-events: none;
+      z-index: 1;
+      transform: translate(-50%, -50%) scale(0);
+      animation: idle-ripple-expand 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+    }
+
+    @keyframes idle-ripple-expand {
+      0% {
+        transform: translate(-50%, -50%) scale(0);
+        opacity: 0.8;
+        border-width: 3px;
+      }
+      50% {
+        opacity: 0.5;
+        border-width: 2px;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0;
+        border-width: 1px;
+      }
+    }
+
     @media (min-width: 768px) {
       #cursor-follower { display: block; }
     }
@@ -1719,6 +1747,54 @@
       requestAnimationFrame(animateInteractiveRipples);
     }
     animateInteractiveRipples();
+
+    // IDLE RIPPLE EFFECT (on cursor pause)
+    let idleTimer = null;
+    let lastMousePos = { x: 0, y: 0 };
+    const IDLE_DELAY = 800; // ms before triggering ripple
+    const IDLE_RIPPLE_SIZES = [100, 180, 260]; // Multiple ripples of different sizes
+
+    function createIdleRipple(x, y) {
+      IDLE_RIPPLE_SIZES.forEach((size, index) => {
+        setTimeout(() => {
+          const ripple = document.createElement('div');
+          ripple.className = 'idle-ripple';
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          ripple.style.width = size + 'px';
+          ripple.style.height = size + 'px';
+          document.body.appendChild(ripple);
+
+          // Remove element after animation completes
+          setTimeout(() => {
+            ripple.remove();
+          }, 1500);
+        }, index * 150); // Stagger each ripple
+      });
+    }
+
+    // Detect mouse idle state
+    document.addEventListener('mousemove', (e) => {
+      lastMousePos = { x: e.clientX, y: e.clientY };
+
+      // Clear existing timer
+      if (idleTimer) {
+        clearTimeout(idleTimer);
+      }
+
+      // Set new timer to trigger ripple after idle period
+      idleTimer = setTimeout(() => {
+        createIdleRipple(lastMousePos.x, lastMousePos.y);
+      }, IDLE_DELAY);
+    });
+
+    // Clear timer when mouse leaves window
+    document.addEventListener('mouseleave', () => {
+      if (idleTimer) {
+        clearTimeout(idleTimer);
+        idleTimer = null;
+      }
+    });
 
     // 1. HERO RIPPLE CANVAS
     const canvas = document.getElementById('ripple-canvas');
