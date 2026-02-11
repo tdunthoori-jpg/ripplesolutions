@@ -25,7 +25,6 @@
       --accent: #d4a574;
       --accent-dim: rgba(212,165,116,0.15);
       --accent-border: rgba(212,165,116,0.35);
-      --lime: #C8F060;
     }
 
     html { scroll-behavior: smooth; }
@@ -49,7 +48,7 @@
       width: 8px;
       height: 8px;
       border-radius: 50%;
-      background: var(--lime);
+      background: var(--accent);
       opacity: 0.6;
       pointer-events: none;
       z-index: 9998;
@@ -158,7 +157,7 @@
       padding: 120px 40px 80px;
       position: relative;
       overflow: hidden;
-      background: radial-gradient(ellipse 120% 80% at 50% 20%, rgba(200,240,96,0.03) 0%, transparent 50%),
+      background: radial-gradient(ellipse 120% 80% at 50% 20%, rgba(212,165,116,0.03) 0%, transparent 50%),
                   radial-gradient(ellipse 100% 100% at 80% 60%, rgba(212,165,116,0.04) 0%, transparent 60%),
                   var(--bg);
     }
@@ -203,7 +202,7 @@
       transform: translateX(-50%);
       width: 1200px;
       height: 1200px;
-      background: radial-gradient(circle, rgba(200,240,96,0.08) 0%, rgba(212,165,116,0.05) 30%, transparent 60%);
+      background: radial-gradient(circle, rgba(212,165,116,0.08) 0%, rgba(212,165,116,0.05) 30%, transparent 60%);
       pointer-events: none;
       z-index: 0;
       animation: glowPulse 8s ease-in-out infinite;
@@ -220,7 +219,7 @@
       right: -200px;
       width: 800px;
       height: 800px;
-      background: radial-gradient(circle, rgba(200,240,96,0.06) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(212,165,116,0.06) 0%, transparent 60%);
       pointer-events: none;
       z-index: 0;
       animation: glowPulse 10s ease-in-out infinite;
@@ -421,7 +420,7 @@
     .how {
       border-top: 1px solid var(--border);
       position: relative;
-      background: linear-gradient(to bottom, transparent 0%, rgba(200,240,96,0.01) 50%, transparent 100%);
+      background: linear-gradient(to bottom, transparent 0%, rgba(212,165,116,0.01) 50%, transparent 100%);
     }
 
     .how-header {
@@ -441,7 +440,7 @@
       top: 0;
       width: 3px;
       height: 0%;
-      background: linear-gradient(to bottom, var(--lime) 0%, rgba(200,240,96,0.3) 100%);
+      background: linear-gradient(to bottom, var(--accent) 0%, rgba(212,165,116,0.3) 100%);
       transition: height 1.5s cubic-bezier(0.16, 1, 0.3, 1);
       z-index: 1;
     }
@@ -481,35 +480,35 @@
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      border: 3px solid rgba(200,240,96,0.3);
+      border: 3px solid rgba(212,165,116,0.3);
       background: var(--bg);
       transition: all 0.4s ease;
       z-index: 2;
     }
 
     .step.step-visible::before {
-      border-color: var(--lime);
-      box-shadow: 0 0 0 0 rgba(200,240,96,0.4);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 0 rgba(212,165,116,0.4);
       animation: stepPulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
     }
 
     @keyframes stepPulse {
       0%, 100% {
-        box-shadow: 0 0 0 0 rgba(200,240,96,0.4);
+        box-shadow: 0 0 0 0 rgba(212,165,116,0.4);
       }
       50% {
-        box-shadow: 0 0 0 8px rgba(200,240,96,0);
+        box-shadow: 0 0 0 8px rgba(212,165,116,0);
       }
     }
 
     .step:hover {
-      background: rgba(200,240,96,0.01);
+      background: rgba(212,165,116,0.01);
     }
 
     .step:hover::before {
-      background: var(--lime);
-      border-color: var(--lime);
-      box-shadow: 0 0 20px rgba(200,240,96,0.4);
+      background: var(--accent);
+      border-color: var(--accent);
+      box-shadow: 0 0 20px rgba(212,165,116,0.4);
     }
 
     .step:hover .step-num {
@@ -587,7 +586,7 @@
       right: 0;
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(200,240,96,0.025) 0%, transparent 60%);
+      background: radial-gradient(circle, rgba(212,165,116,0.025) 0%, transparent 60%);
       pointer-events: none;
       z-index: 0;
     }
@@ -680,8 +679,8 @@
       font-weight: 600;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--lime);
-      border: 1px solid rgba(200,240,96,0.3);
+      color: var(--accent);
+      border: 1px solid rgba(212,165,116,0.3);
       padding: 3px 10px;
       border-radius: 4px;
       margin-bottom: 20px;
@@ -730,7 +729,7 @@
     }
 
     .metric-val.green {
-      color: var(--lime);
+      color: var(--accent);
     }
 
     .pill {
@@ -741,15 +740,15 @@
       font-weight: 500;
       padding: 3px 10px;
       border-radius: 100px;
-      background: rgba(200,240,96,0.08);
-      color: var(--lime);
-      border: 1px solid rgba(200,240,96,0.3);
+      background: rgba(212,165,116,0.08);
+      color: var(--accent);
+      border: 1px solid rgba(212,165,116,0.3);
       animation: pillBreath 2s ease-in-out infinite;
     }
 
     @keyframes pillBreath {
-      0%, 100% { border-color: rgba(200,240,96,0.3); }
-      50% { border-color: rgba(200,240,96,0.85); }
+      0%, 100% { border-color: rgba(212,165,116,0.3); }
+      50% { border-color: rgba(212,165,116,0.85); }
     }
 
     /* ---- PRICING ---- */
@@ -768,7 +767,7 @@
       left: 0;
       right: 0;
       height: 1px;
-      background: linear-gradient(to right, transparent 0%, rgba(200,240,96,0.2) 50%, transparent 100%);
+      background: linear-gradient(to right, transparent 0%, rgba(212,165,116,0.2) 50%, transparent 100%);
     }
 
     .pricing-container {
@@ -865,7 +864,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--lime);
+      color: var(--accent);
     }
 
     .pricing-cta {
@@ -988,8 +987,8 @@
       text-align: center;
       position: relative;
       background:
-        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(200,240,96,0.04) 0%, transparent 60%),
-        linear-gradient(to bottom, rgba(200,240,96,0.025) 0%, transparent 60px);
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212,165,116,0.04) 0%, transparent 60%),
+        linear-gradient(to bottom, rgba(212,165,116,0.025) 0%, transparent 60px);
       overflow: hidden;
     }
 
@@ -1002,8 +1001,8 @@
       width: 120%;
       height: 100%;
       background-image:
-        linear-gradient(rgba(200,240,96,0.02) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(200,240,96,0.02) 1px, transparent 1px);
+        linear-gradient(rgba(212,165,116,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,165,116,0.02) 1px, transparent 1px);
       background-size: 60px 60px;
       mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 0%, transparent 70%);
       -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 0%, transparent 70%);
@@ -1546,7 +1545,7 @@
         const baseOpacity = (1 - progress) * 0.06;
 
         // Main ring
-        ctx.strokeStyle = `rgba(200, 240, 96, ${baseOpacity})`;
+        ctx.strokeStyle = `rgba(212, 165, 116, ${baseOpacity})`;
         ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2);
@@ -1701,7 +1700,7 @@
     const ctaBorderSvg = document.getElementById('cta-border-svg');
     const ctaRect = ctaBorderSvg.querySelector('rect');
     const ctaRectLength = (680 + 400) * 2;
-    ctaRect.style.stroke = 'rgba(200,240,96,0.2)';
+    ctaRect.style.stroke = 'rgba(212,165,116,0.2)';
     ctaRect.style.strokeWidth = '1';
     ctaRect.style.fill = 'none';
     ctaRect.style.strokeDasharray = ctaRectLength;
