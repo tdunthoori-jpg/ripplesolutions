@@ -158,6 +158,27 @@
       padding: 120px 40px 80px;
       position: relative;
       overflow: hidden;
+      background: radial-gradient(ellipse 120% 80% at 50% 20%, rgba(200,240,96,0.03) 0%, transparent 50%),
+                  radial-gradient(ellipse 100% 100% at 80% 60%, rgba(212,165,116,0.04) 0%, transparent 60%),
+                  var(--bg);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+      background-size: 80px 80px;
+      background-position: -1px -1px;
+      mask-image: radial-gradient(ellipse 100% 80% at 50% 30%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 30%, black 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     #ripple-canvas {
@@ -167,22 +188,43 @@
       width: 100%;
       height: 100%;
       pointer-events: none;
-      z-index: 0;
+      z-index: 1;
     }
 
     .hero > * {
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
 
     .hero-glow {
       position: absolute;
-      bottom: -200px;
-      left: -100px;
-      width: 700px;
-      height: 700px;
-      background: radial-gradient(circle, rgba(212,165,116,0.06) 0%, transparent 65%);
+      bottom: -300px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1200px;
+      height: 1200px;
+      background: radial-gradient(circle, rgba(200,240,96,0.08) 0%, rgba(212,165,116,0.05) 30%, transparent 60%);
       pointer-events: none;
+      z-index: 0;
+      animation: glowPulse 8s ease-in-out infinite;
+    }
+
+    @keyframes glowPulse {
+      0%, 100% { opacity: 1; transform: translateX(-50%) scale(1); }
+      50% { opacity: 0.7; transform: translateX(-50%) scale(1.05); }
+    }
+
+    .hero-glow-top {
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 800px;
+      height: 800px;
+      background: radial-gradient(circle, rgba(200,240,96,0.06) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+      animation: glowPulse 10s ease-in-out infinite;
+      animation-delay: 2s;
     }
 
     .hero-badge {
@@ -378,6 +420,8 @@
     /* ---- HOW IT WORKS ---- */
     .how {
       border-top: 1px solid var(--border);
+      position: relative;
+      background: linear-gradient(to bottom, transparent 0%, rgba(200,240,96,0.01) 50%, transparent 100%);
     }
 
     .how-header {
@@ -462,6 +506,19 @@
     /* ---- WHY SECTION ---- */
     .why {
       border-top: 1px solid var(--border);
+      position: relative;
+    }
+
+    .why::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(200,240,96,0.025) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .why-grid {
@@ -627,7 +684,20 @@
     /* ---- PRICING ---- */
     .pricing {
       border-top: 1px solid var(--border);
-      background: #080808;
+      background:
+        radial-gradient(ellipse 60% 50% at 30% 50%, rgba(212,165,116,0.03) 0%, transparent 60%),
+        #080808;
+      position: relative;
+    }
+
+    .pricing::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(to right, transparent 0%, rgba(200,240,96,0.2) 50%, transparent 100%);
     }
 
     .pricing-container {
@@ -749,6 +819,19 @@
     /* ---- SOCIAL PROOF ---- */
     .proof {
       border-top: 1px solid var(--border);
+      position: relative;
+    }
+
+    .proof::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(212,165,116,0.03) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .proof-header {
@@ -833,13 +916,35 @@
       border-top: none;
       text-align: center;
       position: relative;
-      background: linear-gradient(to bottom, rgba(200,240,96,0.025) 0%, transparent 60px);
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(200,240,96,0.04) 0%, transparent 60%),
+        linear-gradient(to bottom, rgba(200,240,96,0.025) 0%, transparent 60px);
+      overflow: hidden;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120%;
+      height: 100%;
+      background-image:
+        linear-gradient(rgba(200,240,96,0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,240,96,0.02) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 0%, transparent 70%);
+      -webkit-mask-image: radial-gradient(ellipse 60% 50% at 50% 50%, black 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .cta-inner {
       max-width: 680px;
       margin: 0 auto;
       position: relative;
+      z-index: 1;
     }
 
     .cta-wordmark {
@@ -1010,6 +1115,7 @@
   <section class="hero">
     <canvas id="ripple-canvas"></canvas>
     <div class="hero-glow"></div>
+    <div class="hero-glow-top"></div>
 
     <div class="hero-badge">
       <span class="badge-dot"></span>
@@ -1329,9 +1435,9 @@
     const ctx = canvas.getContext('2d');
     let ripples = [];
     let lastSpawn = 0;
-    const SPAWN_INTERVAL = 1000;
-    const MAX_RIPPLES = 4;
-    const RIPPLE_DURATION = 4000;
+    const SPAWN_INTERVAL = 1200;
+    const MAX_RIPPLES = 5;
+    const RIPPLE_DURATION = 6000;
 
     function resizeCanvas() {
       const hero = document.querySelector('.hero');
@@ -1356,16 +1462,30 @@
         if (elapsed > RIPPLE_DURATION) return false;
 
         const progress = elapsed / RIPPLE_DURATION;
-        const easeOut = 1 - Math.pow(1 - progress, 2);
-        const maxRadius = Math.max(canvas.width, canvas.height) * 0.6;
+        const easeOut = 1 - Math.pow(1 - progress, 3);
+        const maxRadius = Math.max(canvas.width, canvas.height) * 0.7;
         const radius = maxRadius * easeOut;
-        const opacity = (1 - progress) * 0.04;
 
-        ctx.strokeStyle = `rgba(200, 240, 96, ${opacity})`;
-        ctx.lineWidth = 1.5;
+        // Multiple rings per ripple for more depth
+        const baseOpacity = (1 - progress) * 0.12;
+
+        // Main ring
+        ctx.strokeStyle = `rgba(200, 240, 96, ${baseOpacity})`;
+        ctx.lineWidth = 2;
         ctx.beginPath();
         ctx.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2);
         ctx.stroke();
+
+        // Inner companion ring
+        if (progress > 0.1) {
+          const innerRadius = radius * 0.7;
+          const innerOpacity = baseOpacity * 0.5;
+          ctx.strokeStyle = `rgba(212, 165, 116, ${innerOpacity})`;
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.arc(canvas.width / 2, canvas.height / 2, innerRadius, 0, Math.PI * 2);
+          ctx.stroke();
+        }
 
         return true;
       });
