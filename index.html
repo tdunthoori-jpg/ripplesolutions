@@ -227,28 +227,104 @@
     }
 
     .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border: 1px solid var(--accent-border);
-      background: var(--accent-dim);
-      border-radius: 100px;
-      padding: 6px 14px;
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--accent);
-      letter-spacing: 0.04em;
-      text-transform: uppercase;
-      margin-bottom: 36px;
-      opacity: 0;
-      animation: fadeUp 0.5s ease-out 0.1s forwards;
+      display: none;
     }
 
     .badge-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
+      display: none;
+    }
+
+    /* ---- STICKY BOTTOM CTA ---- */
+    .sticky-cta {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(10,22,40,0.98) 0%, rgba(10,22,40,0.95) 80%, transparent 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(212,165,116,0.15);
+      transform: translateY(100%);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+    }
+
+    .sticky-cta.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .sticky-cta-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .sticky-cta-text {
+      flex: 1;
+    }
+
+    .sticky-cta-text h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+      letter-spacing: -0.02em;
+    }
+
+    .sticky-cta-text p {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .sticky-cta-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       background: var(--accent);
+      color: #0a0a0a;
+      padding: 16px 32px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(212,165,116,0.2);
+    }
+
+    .sticky-cta-button:hover {
+      opacity: 0.88;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 24px rgba(212,165,116,0.3);
+    }
+
+    @media (max-width: 768px) {
+      .sticky-cta-inner {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px;
+      }
+
+      .sticky-cta-text h3 {
+        font-size: 16px;
+      }
+
+      .sticky-cta-text p {
+        font-size: 13px;
+      }
+
+      .sticky-cta-button {
+        width: 100%;
+        justify-content: center;
+      }
     }
 
     .hero-heading {
@@ -1486,6 +1562,20 @@
     </div>
   </section>
 
+  <!-- STICKY BOTTOM CTA -->
+  <div class="sticky-cta" id="sticky-cta">
+    <div class="sticky-cta-inner">
+      <div class="sticky-cta-text">
+        <h3>Ready to fill your calendar?</h3>
+        <p>Book a strategy call and get your first appointments within 48 hours</p>
+      </div>
+      <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/hello-ripplesolutions/30min'});return false;" class="sticky-cta-button">
+        Book Strategy Call
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </div>
+
   <!-- FOOTER -->
   <footer>
     <a href="#" class="footer-logo">Ripple<span>.</span></a>
@@ -1720,6 +1810,27 @@
 
     const ctaSection = document.querySelector('.cta-section');
     if (ctaSection) ctaObserver.observe(ctaSection);
+
+    // 7. STICKY BOTTOM CTA
+    const stickyCta = document.getElementById('sticky-cta');
+    let lastScroll = 0;
+
+    function handleStickyCtaScroll() {
+      const currentScroll = window.pageYOffset;
+      const heroHeight = document.querySelector('.hero').offsetHeight;
+
+      // Show sticky CTA after scrolling past hero section
+      if (currentScroll > heroHeight - 200) {
+        stickyCta.classList.add('visible');
+      } else {
+        stickyCta.classList.remove('visible');
+      }
+
+      lastScroll = currentScroll;
+    }
+
+    window.addEventListener('scroll', handleStickyCtaScroll);
+    handleStickyCtaScroll(); // Check initial state
   </script>
 </body>
 </html>
