@@ -75,22 +75,22 @@
     .idle-ripple {
       position: fixed;
       border-radius: 50%;
-      border: 2px solid rgba(212, 165, 116, 0.6);
+      border: 1px solid rgba(212, 165, 116, 0.35);
       pointer-events: none;
-      z-index: 1;
+      z-index: 9999;
       transform: translate(-50%, -50%) scale(0);
-      animation: idle-ripple-expand 1.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+      animation: idle-ripple-expand 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
     }
 
     @keyframes idle-ripple-expand {
       0% {
         transform: translate(-50%, -50%) scale(0);
-        opacity: 0.8;
-        border-width: 3px;
+        opacity: 0.4;
+        border-width: 1.5px;
       }
       50% {
-        opacity: 0.5;
-        border-width: 2px;
+        opacity: 0.25;
+        border-width: 1px;
       }
       100% {
         transform: translate(-50%, -50%) scale(1);
@@ -1751,8 +1751,8 @@
     // IDLE RIPPLE EFFECT (on cursor pause)
     let idleTimer = null;
     let lastMousePos = { x: 0, y: 0 };
-    const IDLE_DELAY = 800; // ms before triggering ripple
-    const IDLE_RIPPLE_SIZES = [100, 180, 260]; // Multiple ripples of different sizes
+    const IDLE_DELAY = 1200; // ms before triggering ripple
+    const IDLE_RIPPLE_SIZES = [80, 150]; // Just 2 subtle ripples
 
     function createIdleRipple(x, y) {
       IDLE_RIPPLE_SIZES.forEach((size, index) => {
@@ -1768,8 +1768,8 @@
           // Remove element after animation completes
           setTimeout(() => {
             ripple.remove();
-          }, 1500);
-        }, index * 150); // Stagger each ripple
+          }, 1200);
+        }, index * 200); // Stagger each ripple
       });
     }
 
