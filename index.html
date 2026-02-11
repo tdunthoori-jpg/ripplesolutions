@@ -41,20 +41,20 @@
     }
 
     /* INTERACTIVE RIPPLE CANVAS */
-    #ripple-canvas {
+    #interactive-ripple-canvas {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
       pointer-events: none;
-      opacity: 0.8;
+      mix-blend-mode: screen;
     }
 
-    body > * {
+    body > *:not(#interactive-ripple-canvas) {
       position: relative;
-      z-index: 1;
+      z-index: 2;
     }
 
     #cursor-follower {
@@ -1263,7 +1263,7 @@
 </head>
 <body>
   <!-- INTERACTIVE RIPPLE BACKGROUND -->
-  <canvas id="ripple-canvas"></canvas>
+  <canvas id="interactive-ripple-canvas"></canvas>
 
   <div id="cursor-follower"></div>
 
@@ -1613,20 +1613,20 @@
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
     // 0. INTERACTIVE RIPPLE BACKGROUND
-    const rippleCanvas = document.getElementById('ripple-canvas');
-    const rippleCtx = rippleCanvas.getContext('2d');
-    let ripples = [];
+    const interactiveRippleCanvas = document.getElementById('interactive-ripple-canvas');
+    const interactiveRippleCtx = interactiveRippleCanvas.getContext('2d');
+    let interactiveRipples = [];
     let mouseX = 0;
     let mouseY = 0;
     let lastRippleTime = 0;
 
     // Set canvas size
-    function resizeRippleCanvas() {
-      rippleCanvas.width = window.innerWidth;
-      rippleCanvas.height = window.innerHeight;
+    function resizeInteractiveRippleCanvas() {
+      interactiveRippleCanvas.width = window.innerWidth;
+      interactiveRippleCanvas.height = window.innerHeight;
     }
-    resizeRippleCanvas();
-    window.addEventListener('resize', resizeRippleCanvas);
+    resizeInteractiveRippleCanvas();
+    window.addEventListener('resize', resizeInteractiveRippleCanvas);
 
     // Ripple class
     class Ripple {
@@ -1634,84 +1634,91 @@
         this.x = x;
         this.y = y;
         this.radius = 0;
-        this.maxRadius = Math.random() * 150 + 200;
-        this.speed = Math.random() * 3 + 2;
-        this.alpha = 0.8;
-        this.decay = 0.006;
-        this.lineWidth = Math.random() * 2 + 1;
-        // Gold/amber accent color
-        this.color = 'rgba(212, 165, 116, ';
+        this.maxRadius = Math.random() * 100 + 120;
+        this.speed = Math.random() * 2.5 + 2;
+        this.alpha = 0.7;
+        this.decay = 0.01;
+        this.lineWidth = 2;
       }
 
       update() {
         this.radius += this.speed;
         this.alpha -= this.decay;
-        return this.alpha > 0;
+        return this.alpha > 0 && this.radius < this.maxRadius;
       }
 
       draw() {
-        rippleCtx.save();
-        rippleCtx.beginPath();
-        rippleCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        rippleCtx.strokeStyle = this.color + this.alpha + ')';
-        rippleCtx.lineWidth = this.lineWidth;
-        rippleCtx.stroke();
-        rippleCtx.restore();
+        interactiveRippleCtx.save();
 
-        // Inner glow
-        rippleCtx.save();
-        rippleCtx.beginPath();
-        rippleCtx.arc(this.x, this.y, this.radius * 0.5, 0, Math.PI * 2);
-        const gradient = rippleCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius * 0.5);
-        gradient.addColorStop(0, this.color + (this.alpha * 0.4) + ')');
-        gradient.addColorStop(1, this.color + '0)');
-        rippleCtx.fillStyle = gradient;
-        rippleCtx.fill();
-        rippleCtx.restore();
+        // Main ring - bright gold
+        interactiveRippleCtx.beginPath();
+        interactiveRippleCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        interactiveRippleCtx.strokeStyle = `rgba(212, 165, 116, ${this.alpha * 0.8})`;
+        interactiveRippleCtx.lineWidth = this.lineWidth;
+        interactiveRippleCtx.stroke();
+
+        // Outer glow - softer gold
+        interactiveRippleCtx.beginPath();
+        interactiveRippleCtx.arc(this.x, this.y, this.radius + 5, 0, Math.PI * 2);
+        interactiveRippleCtx.strokeStyle = `rgba(212, 165, 116, ${this.alpha * 0.3})`;
+        interactiveRippleCtx.lineWidth = this.lineWidth + 2;
+        interactiveRippleCtx.stroke();
+
+        // Inner fill with gradient
+        const gradient = interactiveRippleCtx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+        gradient.addColorStop(0, `rgba(212, 165, 116, ${this.alpha * 0.2})`);
+        gradient.addColorStop(0.5, `rgba(212, 165, 116, ${this.alpha * 0.1})`);
+        gradient.addColorStop(1, 'rgba(212, 165, 116, 0)');
+        interactiveRippleCtx.fillStyle = gradient;
+        interactiveRippleCtx.beginPath();
+        interactiveRippleCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        interactiveRippleCtx.fill();
+
+        interactiveRippleCtx.restore();
       }
     }
 
     // Track mouse movement
     document.addEventListener('mousemove', (e) => {
       mouseX = e.clientX;
-      mouseY = e.clientY + window.scrollY;
+      mouseY = e.clientY;
 
       const now = Date.now();
-      // Create ripple every 50ms when moving
-      if (now - lastRippleTime > 50) {
-        ripples.push(new Ripple(e.clientX, e.clientY));
+      // Create ripple every 60ms when moving
+      if (now - lastRippleTime > 60) {
+        interactiveRipples.push(new Ripple(e.clientX, e.clientY));
         lastRippleTime = now;
       }
     });
 
-    // Click to create larger ripple
+    // Click to create larger ripple burst
     document.addEventListener('click', (e) => {
-      for (let i = 0; i < 3; i++) {
+      for (let i = 0; i < 4; i++) {
         setTimeout(() => {
           const ripple = new Ripple(e.clientX, e.clientY);
-          ripple.maxRadius = 300 + i * 80;
-          ripple.alpha = 1.0;
-          ripple.decay = 0.005;
-          ripple.lineWidth = 2;
-          ripples.push(ripple);
-        }, i * 80);
+          ripple.maxRadius = 200 + i * 40;
+          ripple.alpha = 0.9;
+          ripple.decay = 0.007;
+          ripple.lineWidth = 3;
+          interactiveRipples.push(ripple);
+        }, i * 60);
       }
     });
 
     // Animation loop
-    function animateRipples() {
-      rippleCtx.clearRect(0, 0, rippleCanvas.width, rippleCanvas.height);
+    function animateInteractiveRipples() {
+      interactiveRippleCtx.clearRect(0, 0, interactiveRippleCanvas.width, interactiveRippleCanvas.height);
 
       // Update and draw ripples
-      ripples = ripples.filter(ripple => {
+      interactiveRipples = interactiveRipples.filter(ripple => {
         const alive = ripple.update();
         if (alive) ripple.draw();
         return alive;
       });
 
-      requestAnimationFrame(animateRipples);
+      requestAnimationFrame(animateInteractiveRipples);
     }
-    animateRipples();
+    animateInteractiveRipples();
 
     // 1. HERO RIPPLE CANVAS
     const canvas = document.getElementById('ripple-canvas');
