@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ripple Solutions — Qualified Appointments for Real Estate Agents</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #080808;
+      --bg-2: #0e0e0e;
+      --bg-3: #141414;
+      --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14);
+      --text: #f0ede8;
+      --text-muted: rgba(240,237,232,0.45);
+      --text-dim: rgba(240,237,232,0.25);
+      --accent: #c8f060;
+      --accent-dim: rgba(200,240,96,0.12);
+      --accent-border: rgba(200,240,96,0.3);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ---- NAV ---- */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      height: 60px;
+      border-bottom: 1px solid rgba(200,240,96,0.15);
+      background: rgba(8,8,8,0.85);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span {
+      color: var(--accent);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+      position: relative;
+      transition: color 0.3s;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: rgba(200,240,96,0.6);
+      transition: width 300ms ease-out;
+    }
+
+    .nav-links a:hover {
+      color: var(--text);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #0a0a0a !important;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 600 !important;
+      font-size: 13px !important;
+      transition: opacity 0.3s !important;
+    }
+
+    .nav-cta:hover { opacity: 0.85; }
+
+    .nav-cta::after {
+      display: none;
+    }
+
+    /* ---- HERO ---- */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 120px 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-glow {
+      position: absolute;
+      bottom: -200px;
+      left: -100px;
+      width: 700px;
+      height: 700px;
+      background: radial-gradient(circle, rgba(200,240,96,0.04) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--accent-border);
+      background: var(--accent-dim);
+      border-radius: 100px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease-out 0.1s forwards;
+    }
+
+    .badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .hero-heading {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(52px, 7.5vw, 100px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      max-width: 900px;
+      margin-bottom: 32px;
+    }
+
+    .hero-heading .word {
+      display: inline-block;
+      opacity: 0;
+      filter: blur(8px);
+      animation: wordReveal 500ms ease-out forwards;
+      margin-right: 0.25em;
+    }
+
+    .hero-heading .word:nth-child(1) { animation-delay: 200ms; }
+    .hero-heading .word:nth-child(2) { animation-delay: 240ms; }
+    .hero-heading .word:nth-child(3) { animation-delay: 280ms; }
+    .hero-heading .word:nth-child(4) { animation-delay: 320ms; }
+    .hero-heading .word:nth-child(5) { animation-delay: 360ms; }
+    .hero-heading .word:nth-child(6) { animation-delay: 400ms; }
+    .hero-heading .word:nth-child(7) { animation-delay: 440ms; }
+    .hero-heading .word:nth-child(8) { animation-delay: 480ms; }
+
+    .hero-heading .accent-text {
+      color: var(--accent);
+    }
+
+    @keyframes wordReveal {
+      from {
+        opacity: 0;
+        filter: blur(8px);
+      }
+      to {
+        opacity: 1;
+        filter: blur(0);
+      }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-sub {
+      font-size: 16px;
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 460px;
+      line-height: 1.65;
+      letter-spacing: 0.01em;
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease-out 0.7s forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      opacity: 0;
+      animation: fadeUp 0.5s ease-out 0.85s forwards;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #0a0a0a;
+      padding: 14px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 14px;
+      text-decoration: none;
+      transition: color 0.3s;
+      padding: 14px 0;
+    }
+
+    .btn-ghost:hover { color: var(--text); }
+
+    .btn-ghost svg { transition: transform 0.3s; }
+    .btn-ghost:hover svg { transform: translateX(3px); }
+
+    .hero-stats {
+      display: flex;
+      gap: 48px;
+      margin-top: 80px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.5s ease-out 1s forwards;
+    }
+
+    .stat-item {}
+
+    .stat-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 40px;
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-num span { color: var(--accent); }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-dim);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+
+    /* ---- SECTION COMMON ---- */
+    section {
+      padding: 120px 40px;
+      position: relative;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+    }
+
+    .section-heading {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: clamp(32px, 4vw, 54px);
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      color: var(--text);
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+
+    .section-sub {
+      font-size: 17px;
+      color: var(--text-muted);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.65;
+    }
+
+    /* ---- HOW IT WORKS ---- */
+    .how {
+      border-top: 1px solid var(--border);
+    }
+
+    .how-header {
+      margin-bottom: 72px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .step {
+      background: var(--bg-2);
+      padding: 48px 40px;
+      position: relative;
+      transition: background 0.3s;
+      overflow: hidden;
+    }
+
+    .step::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 2px;
+      height: 0;
+      background: var(--accent);
+      transition: height 300ms ease-out;
+    }
+
+    .step:hover {
+      background: var(--bg-3);
+    }
+
+    .step:hover::before {
+      height: 100%;
+    }
+
+    .step-num {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+
+    .step-icon {
+      width: 40px;
+      height: 40px;
+      border: 1px solid var(--border-hover);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    .step h3 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 12px;
+    }
+
+    .step p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ---- WHY SECTION ---- */
+    .why {
+      border-top: 1px solid var(--border);
+    }
+
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 72px;
+    }
+
+    .why-left {}
+
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 0;
+    }
+
+    .feature-item {
+      display: flex;
+      gap: 20px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: default;
+      transition: background 0.3s;
+    }
+
+    .feature-item:last-child { border-bottom: none; }
+
+    .feature-icon-wrap {
+      width: 36px;
+      height: 36px;
+      flex-shrink: 0;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+      margin-top: 2px;
+      transition: border-color 0.3s, background 0.3s, color 0.3s;
+    }
+
+    .feature-item:hover .feature-icon-wrap {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .feature-text h4 {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 17px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .feature-text p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.65;
+      font-weight: 300;
+    }
+
+    /* ---- CARD PANEL ---- */
+    .why-right {
+      position: sticky;
+      top: 100px;
+    }
+
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--bg-2);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: 28px 32px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .panel-tag {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 12px;
+    }
+
+    .panel-title {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .panel-body {
+      padding: 28px 32px;
+    }
+
+    .metric-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .metric-row:last-child { border-bottom: none; }
+
+    .metric-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .metric-val {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .metric-val.green {
+      color: var(--accent);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(200,240,96,0.1);
+      color: var(--accent);
+      border: 1px solid var(--accent-border);
+    }
+
+    /* ---- PRICING ---- */
+    .pricing {
+      border-top: 1px solid var(--border);
+    }
+
+    .pricing-container {
+      max-width: 560px;
+      margin: 60px auto 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--bg-2);
+      overflow: hidden;
+    }
+
+    .pricing-top {
+      padding: 48px 48px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pricing-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .pricing-price {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 64px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .pricing-price .unit {
+      font-size: 20px;
+      font-weight: 400;
+      color: var(--text-muted);
+      vertical-align: top;
+      margin-top: 12px;
+      display: inline-block;
+    }
+
+    .pricing-desc {
+      font-size: 15px;
+      color: var(--text-muted);
+      font-weight: 300;
+    }
+
+    .pricing-features {
+      padding: 40px 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .pricing-feature {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .check-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      background: var(--accent-dim);
+      border: 1px solid var(--accent-border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent);
+    }
+
+    .pricing-cta {
+      padding: 0 48px 48px;
+    }
+
+    .pricing-cta a {
+      display: block;
+      text-align: center;
+      background: var(--accent);
+      color: #0a0a0a;
+      padding: 16px 28px;
+      border-radius: 8px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .pricing-cta a:hover { opacity: 0.88; transform: translateY(-1px); }
+
+    /* ---- SOCIAL PROOF ---- */
+    .proof {
+      border-top: 1px solid var(--border);
+    }
+
+    .proof-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .testimonials {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .testimonial {
+      background: var(--bg-2);
+      padding: 36px 32px;
+      transition: background 0.3s;
+    }
+
+    .testimonial:hover { background: var(--bg-3); }
+
+    .quote-mark {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 48px;
+      line-height: 1;
+      color: var(--accent);
+      margin-bottom: 16px;
+      opacity: 0.6;
+    }
+
+    .testimonial p {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--text-muted);
+      font-weight: 300;
+      margin-bottom: 28px;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .author-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--bg-3);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .author-info {}
+    .author-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .author-role {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* ---- CTA SECTION ---- */
+    .cta-section {
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .cta-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .cta-section .section-heading {
+      margin: 0 auto 20px;
+    }
+
+    .cta-section .section-sub {
+      margin: 0 auto 44px;
+    }
+
+    /* ---- FOOTER ---- */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 40px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: 'Bricolage Grotesque', sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text-muted);
+      text-decoration: none;
+    }
+
+    .footer-logo span { color: var(--accent); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--text-dim);
+    }
+
+    /* ---- SCROLL REVEAL ---- */
+    .reveal {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 500ms ease-out, transform 500ms ease-out;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ---- TICKER ---- */
+    .ticker-wrap {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+      padding: 14px 0;
+      background: var(--bg-2);
+    }
+
+    .ticker {
+      display: flex;
+      width: max-content;
+      animation: ticker 36s linear infinite;
+    }
+
+    .ticker-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 0 40px;
+      font-size: 13px;
+      color: var(--text-dim);
+      white-space: nowrap;
+      font-weight: 400;
+    }
+
+    .ticker-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    @keyframes ticker {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      section { padding: 80px 20px; }
+      .hero { padding: 100px 20px 60px; }
+      .hero-stats { gap: 28px; }
+      .steps { grid-template-columns: 1fr; }
+      .why-grid { grid-template-columns: 1fr; gap: 48px; }
+      .why-right { position: static; }
+      .testimonials { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 20px; text-align: center; }
+      .pricing-container { margin: 40px 0 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">Ripple<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#how">How it works</a></li>
+      <li><a href="#why">Why Ripple</a></li>
+      <li><a href="#pricing">Pricing</a></li>
+      <li><a href="#testimonials">Results</a></li>
+      <li><a href="#book" class="nav-cta">Book a call</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-glow"></div>
+
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      Pay-per-appointment · Real estate
+    </div>
+
+    <h1 class="hero-heading">
+      <span class="word">Your</span>
+      <span class="word">calendar,</span>
+      <span class="word">filled</span>
+      <span class="word">with</span>
+      <span class="word accent-text">qualified</span>
+      <span class="word">buyers</span>
+      <span class="word">&</span>
+      <span class="word">sellers.</span>
+    </h1>
+
+    <p class="hero-sub">We source leads, book appointments, and handle all follow-ups. You show up and close. No retainers. Pay only for results.</p>
+
+    <div class="hero-actions">
+      <a href="#book" class="btn-primary">
+        Book a strategy call
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#how" class="btn-ghost">
+        See how it works
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">94<span>%</span></div>
+        <div class="stat-label">Appointment show rate</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">48<span>h</span></div>
+        <div class="stat-label">To first booked appointment</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">$0</div>
+        <div class="stat-label">Until you get results</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span class="ticker-item"><span class="ticker-dot"></span>Exclusive appointments · never shared</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Verified homeowners in your market</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>SMS, email, and call follow-up included</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>No retainers · pay only per appointment</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Active in 30+ real estate markets</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Appointment guarantee or we rebook</span>
+      <!-- duplicate for seamless loop -->
+      <span class="ticker-item"><span class="ticker-dot"></span>Exclusive appointments · never shared</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Verified homeowners in your market</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>SMS, email, and call follow-up included</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>No retainers · pay only per appointment</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Active in 30+ real estate markets</span>
+      <span class="ticker-item"><span class="ticker-dot"></span>Appointment guarantee or we rebook</span>
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="how">
+    <div class="how-header reveal">
+      <div class="section-label">Process</div>
+      <h2 class="section-heading">Three steps. You close deals, we handle everything else.</h2>
+    </div>
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+        </div>
+        <h3>Onboard in 24 hours</h3>
+        <p>Tell us your target market, price range, and availability. We set up your dedicated outreach pipeline and start sourcing leads immediately.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>We qualify every lead</h3>
+        <p>Our team verifies intent, timeline, and readiness before booking. No tire-kickers. Every appointment is a real prospect in your area with genuine need.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-icon">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <h3>Show up and close</h3>
+        <p>Appointments land on your calendar. We handle all confirmation calls, reminder texts, and follow-ups to ensure maximum show rate. You just close.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY RIPPLE -->
+  <section class="why" id="why">
+    <div class="reveal">
+      <div class="section-label">Why Ripple</div>
+      <h2 class="section-heading">Built differently from every other lead gen company.</h2>
+      <p class="section-sub">Most agencies sell you the same recycled leads they sell to five other agents. We don't.</p>
+    </div>
+
+    <div class="why-grid">
+      <div class="why-left">
+        <div class="feature-list reveal">
+          <div class="feature-item">
+            <div class="feature-icon-wrap">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <div class="feature-text">
+              <h4>100% exclusive appointments</h4>
+              <p>Every lead we send you is yours alone. We scrape our own homeowner data and never share appointments with any other agent, ever.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon-wrap">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+            </div>
+            <div class="feature-text">
+              <h4>Multi-touch follow-up system</h4>
+              <p>SMS sequences, confirmation calls, and email reminders keep your prospects warm and showing up. Our no-show rate is under 6%.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon-wrap">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            </div>
+            <div class="feature-text">
+              <h4>Zero risk, pay-per-result</h4>
+              <p>No monthly retainers, no setup fees. You pay only for appointments that show. If an appointment doesn't show, we rebook it at no charge.</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon-wrap">
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <div class="feature-text">
+              <h4>Your market, your territory</h4>
+              <p>We work with one agent per zip code. Once you're in, your territory is locked. No competing agents getting the same leads from us.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="why-right reveal">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-tag">Live appointment · Sample</div>
+            <div class="panel-title">Confirmed buyer appointment</div>
+          </div>
+          <div class="panel-body">
+            <div class="metric-row">
+              <span class="metric-label">Status</span>
+              <span class="metric-val"><span class="pill">&#x2713; Confirmed</span></span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Prospect type</span>
+              <span class="metric-val">First-time buyer</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Budget range</span>
+              <span class="metric-val">$550k – $750k</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Timeline</span>
+              <span class="metric-val">60–90 days</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Pre-qualified</span>
+              <span class="metric-val green">Yes · $700k approval</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Reminders sent</span>
+              <span class="metric-val">SMS + Email + Call</span>
+            </div>
+            <div class="metric-row">
+              <span class="metric-label">Exclusive to you</span>
+              <span class="metric-val green">Yes</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="pricing" id="pricing">
+    <div class="reveal" style="text-align: center;">
+      <div class="section-label">Pricing</div>
+      <h2 class="section-heading" style="margin: 0 auto 16px;">Simple. No surprises.</h2>
+      <p class="section-sub" style="margin: 0 auto;">One price per qualified appointment. That's it. No monthly fees, no contracts, no catch.</p>
+    </div>
+
+    <div class="pricing-container reveal">
+      <div class="pricing-top">
+        <div class="pricing-label">Per qualified appointment</div>
+        <div class="pricing-price"><span class="unit">$</span>150–250</div>
+        <p class="pricing-desc">Pricing varies by market. Volume discounts available. Contact us for custom rates.</p>
+      </div>
+      <div class="pricing-features">
+        <div class="pricing-feature">
+          <div class="check-icon"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          Fully qualified, exclusive appointment
+        </div>
+        <div class="pricing-feature">
+          <div class="check-icon"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          Multi-touch confirmation and follow-up included
+        </div>
+        <div class="pricing-feature">
+          <div class="check-icon"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          No-show? We rebook at no charge
+        </div>
+        <div class="pricing-feature">
+          <div class="check-icon"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          Dedicated account manager
+        </div>
+        <div class="pricing-feature">
+          <div class="check-icon"><svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
+          Cancel anytime · zero lock-in
+        </div>
+      </div>
+      <div class="pricing-cta">
+        <a href="#book">Get started today</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="proof" id="testimonials">
+    <div class="proof-header reveal">
+      <div class="section-label">Results</div>
+      <h2 class="section-heading" style="margin: 0 auto 12px;">Agents closing more deals.</h2>
+      <p class="section-sub" style="margin: 0 auto;">Don't take our word for it.</p>
+    </div>
+
+    <div class="testimonials reveal">
+      <div class="testimonial">
+        <div class="quote-mark">"</div>
+        <p>First month with Ripple I closed two deals from their appointments. I was skeptical about pay-per-appointment but it completely changed how I think about lead gen. Best ROI I've had in 8 years.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">MR</div>
+          <div class="author-info">
+            <div class="author-name">Michael R.</div>
+            <div class="author-role">Realtor · Austin, TX</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="quote-mark">"</div>
+        <p>What sold me was the exclusivity. I'm not competing with 4 other agents for the same person. These leads are mine and mine only. The show rate is legitimately around 90%, which is unheard of.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">JS</div>
+          <div class="author-info">
+            <div class="author-name">Jennifer S.</div>
+            <div class="author-role">Broker · Miami, FL</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="quote-mark">"</div>
+        <p>I was spending $3k/month on Zillow leads that rarely converted. With Ripple I'm paying for results only. Closed a $900k listing from my second appointment with them. Wish I'd found this sooner.</p>
+        <div class="testimonial-author">
+          <div class="author-avatar">DK</div>
+          <div class="author-info">
+            <div class="author-name">David K.</div>
+            <div class="author-role">Realtor · Los Angeles, CA</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section" id="book">
+    <div class="cta-inner reveal">
+      <div class="section-label">Get started</div>
+      <h2 class="section-heading">Ready to fill your calendar?</h2>
+      <p class="section-sub">Book a 20-minute strategy call. We'll walk you through the process, check availability in your market, and get you your first appointments within 48 hours.</p>
+      <div class="hero-actions" style="justify-content: center; margin-top: 44px;">
+        <a href="#" class="btn-primary">
+          Book your strategy call
+          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="footer-logo">Ripple<span>.</span></a>
+    <div class="footer-copy">&copy; 2025 Ripple Solutions</div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
