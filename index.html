@@ -1435,9 +1435,9 @@
     const ctx = canvas.getContext('2d');
     let ripples = [];
     let lastSpawn = 0;
-    const SPAWN_INTERVAL = 1200;
-    const MAX_RIPPLES = 5;
-    const RIPPLE_DURATION = 6000;
+    const SPAWN_INTERVAL = 2000;
+    const MAX_RIPPLES = 4;
+    const RIPPLE_DURATION = 10000;
 
     function resizeCanvas() {
       const hero = document.querySelector('.hero');
@@ -1467,21 +1467,21 @@
         const radius = maxRadius * easeOut;
 
         // Multiple rings per ripple for more depth
-        const baseOpacity = (1 - progress) * 0.12;
+        const baseOpacity = (1 - progress) * 0.06;
 
         // Main ring
         ctx.strokeStyle = `rgba(200, 240, 96, ${baseOpacity})`;
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 1.5;
         ctx.beginPath();
         ctx.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2);
         ctx.stroke();
 
         // Inner companion ring
-        if (progress > 0.1) {
-          const innerRadius = radius * 0.7;
-          const innerOpacity = baseOpacity * 0.5;
+        if (progress > 0.15) {
+          const innerRadius = radius * 0.75;
+          const innerOpacity = baseOpacity * 0.4;
           ctx.strokeStyle = `rgba(212, 165, 116, ${innerOpacity})`;
-          ctx.lineWidth = 1.5;
+          ctx.lineWidth = 1;
           ctx.beginPath();
           ctx.arc(canvas.width / 2, canvas.height / 2, innerRadius, 0, Math.PI * 2);
           ctx.stroke();
