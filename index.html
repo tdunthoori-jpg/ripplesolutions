@@ -6,7 +6,7 @@
   <title>Ripple Solutions — Qualified Appointments for Real Estate Agents</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Manrope:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:wght@800&display=swap" rel="stylesheet" />
   <!-- Calendly embed -->
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
   <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
@@ -25,6 +25,7 @@
       --accent: #d4a574;
       --accent-dim: rgba(212,165,116,0.15);
       --accent-border: rgba(212,165,116,0.35);
+      --lime: #C8F060;
     }
 
     html { scroll-behavior: smooth; }
@@ -37,6 +38,34 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
+    }
+
+    @media (min-width: 768px) {
+      body { cursor: none; }
+    }
+
+    #cursor-follower {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--lime);
+      opacity: 0.6;
+      pointer-events: none;
+      z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 200ms ease, height 200ms ease, opacity 200ms ease;
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      #cursor-follower { display: block; }
+    }
+
+    #cursor-follower.hover {
+      width: 28px;
+      height: 28px;
+      opacity: 0.2;
     }
 
     /* ---- NAV ---- */
@@ -129,6 +158,21 @@
       padding: 120px 40px 80px;
       position: relative;
       overflow: hidden;
+    }
+
+    #ripple-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero > * {
+      position: relative;
+      z-index: 1;
     }
 
     .hero-glow {
@@ -359,6 +403,37 @@
       background: linear-gradient(to bottom, transparent 0%, var(--accent-border) 10%, var(--accent-border) 90%, transparent 100%);
     }
 
+    #steps-connector {
+      position: absolute;
+      top: 120px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      pointer-events: none;
+      z-index: 0;
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      #steps-connector { display: block; }
+    }
+
+    #steps-connector line {
+      stroke: rgba(200,240,96,0.25);
+      stroke-width: 1;
+      stroke-dasharray: 4 4;
+      stroke-dashoffset: 0;
+    }
+
+    #steps-connector.animate line {
+      animation: drawLine 900ms ease-out forwards;
+    }
+
+    @keyframes drawLine {
+      from { stroke-dashoffset: 1200; }
+      to { stroke-dashoffset: 0; }
+    }
+
     .step {
       display: grid;
       grid-template-columns: 160px 1fr;
@@ -539,6 +614,14 @@
       align-items: center;
       padding: 16px 0;
       border-bottom: 1px solid var(--border);
+      opacity: 0;
+      transform: translateX(12px);
+      transition: opacity 400ms ease-out, transform 400ms ease-out;
+    }
+
+    .metric-row.visible {
+      opacity: 1;
+      transform: translateX(0);
     }
 
     .metric-row:last-child { border-bottom: none; }
@@ -568,9 +651,15 @@
       font-weight: 500;
       padding: 3px 10px;
       border-radius: 100px;
-      background: rgba(212,165,116,0.12);
-      color: var(--accent);
-      border: 1px solid var(--accent-border);
+      background: rgba(200,240,96,0.08);
+      color: var(--lime);
+      border: 1px solid rgba(200,240,96,0.3);
+      animation: pillBreath 2s ease-in-out infinite;
+    }
+
+    @keyframes pillBreath {
+      0%, 100% { border-color: rgba(200,240,96,0.3); }
+      50% { border-color: rgba(200,240,96,0.85); }
     }
 
     /* ---- PRICING ---- */
@@ -753,17 +842,54 @@
 
     /* ---- CTA SECTION ---- */
     .cta-section {
-      border-top: 1px solid var(--border);
+      border-top: none;
       text-align: center;
+      position: relative;
+      background: linear-gradient(to bottom, rgba(200,240,96,0.025) 0%, transparent 60px);
     }
 
     .cta-inner {
-      max-width: 640px;
+      max-width: 680px;
       margin: 0 auto;
+      position: relative;
+    }
+
+    .cta-wordmark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: 'Bricolage Grotesque', 'Space Grotesk', sans-serif;
+      font-size: 160px;
+      font-weight: 800;
+      color: var(--text);
+      opacity: 0.03;
+      pointer-events: none;
+      user-select: none;
+      white-space: nowrap;
+      z-index: 0;
+    }
+
+    .cta-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    #cta-border-svg {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 680px;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
     }
 
     .cta-section .section-heading {
       margin: 0 auto 20px;
+      font-size: clamp(48px, 6vw, 80px);
     }
 
     .cta-section .section-sub {
@@ -871,6 +997,7 @@
   </style>
 </head>
 <body>
+  <div id="cursor-follower"></div>
 
   <!-- NAV -->
   <nav>
@@ -886,6 +1013,7 @@
 
   <!-- HERO -->
   <section class="hero">
+    <canvas id="ripple-canvas"></canvas>
     <div class="hero-glow"></div>
 
     <div class="hero-badge">
@@ -959,6 +1087,9 @@
       <h2 class="section-heading">Three steps. You close deals, we handle everything else.</h2>
     </div>
     <div class="steps reveal">
+      <svg id="steps-connector" viewBox="0 0 1100 2" preserveAspectRatio="none">
+        <line x1="0" y1="1" x2="1100" y2="1" />
+      </svg>
       <div class="step">
         <div class="step-num">01</div>
         <div class="step-content">
@@ -1164,14 +1295,20 @@
   <!-- CTA -->
   <section class="cta-section" id="book">
     <div class="cta-inner reveal">
-      <div class="section-label">Get started</div>
-      <h2 class="section-heading">Ready to fill your calendar?</h2>
-      <p class="section-sub">Book a 20-minute strategy call. We'll walk you through the process, check availability in your market, and get you your first appointments within 48 hours.</p>
-      <div class="hero-actions" style="justify-content: center; margin-top: 44px;">
-        <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/hello-ripplesolutions/30min'});return false;" class="btn-primary">
-          Book your strategy call
-          <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
+      <div class="cta-wordmark">Ripple.</div>
+      <svg id="cta-border-svg" viewBox="0 0 680 400" preserveAspectRatio="none">
+        <rect x="1" y="1" width="678" height="398" rx="12" />
+      </svg>
+      <div class="cta-content">
+        <div class="section-label">Get started</div>
+        <h2 class="section-heading">Ready to fill your calendar?</h2>
+        <p class="section-sub">Book a 20-minute strategy call. We'll walk you through the process, check availability in your market, and get you your first appointments within 48 hours.</p>
+        <div class="hero-actions" style="justify-content: center; margin-top: 44px;">
+          <a href="" onclick="Calendly.initPopupWidget({url: 'https://calendly.com/hello-ripplesolutions/30min'});return false;" class="btn-primary">
+            Book your strategy call
+            <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        </div>
       </div>
     </div>
   </section>
@@ -1194,6 +1331,192 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // 1. HERO RIPPLE CANVAS
+    const canvas = document.getElementById('ripple-canvas');
+    const ctx = canvas.getContext('2d');
+    let ripples = [];
+    let lastSpawn = 0;
+    const SPAWN_INTERVAL = 1000;
+    const MAX_RIPPLES = 4;
+    const RIPPLE_DURATION = 4000;
+
+    function resizeCanvas() {
+      const hero = document.querySelector('.hero');
+      canvas.width = hero.offsetWidth;
+      canvas.height = hero.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function drawRipples(timestamp) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Spawn new ripple
+      if (timestamp - lastSpawn > SPAWN_INTERVAL && ripples.length < MAX_RIPPLES) {
+        ripples.push({ startTime: timestamp });
+        lastSpawn = timestamp;
+      }
+
+      // Draw and update ripples
+      ripples = ripples.filter(ripple => {
+        const elapsed = timestamp - ripple.startTime;
+        if (elapsed > RIPPLE_DURATION) return false;
+
+        const progress = elapsed / RIPPLE_DURATION;
+        const easeOut = 1 - Math.pow(1 - progress, 2);
+        const maxRadius = Math.max(canvas.width, canvas.height) * 0.6;
+        const radius = maxRadius * easeOut;
+        const opacity = (1 - progress) * 0.04;
+
+        ctx.strokeStyle = `rgba(200, 240, 96, ${opacity})`;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2, canvas.height / 2, radius, 0, Math.PI * 2);
+        ctx.stroke();
+
+        return true;
+      });
+
+      requestAnimationFrame(drawRipples);
+    }
+    requestAnimationFrame(drawRipples);
+
+    // 2. COUNTING NUMBER ANIMATION
+    let statsAnimated = false;
+    const statsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !statsAnimated) {
+          statsAnimated = true;
+          animateStats();
+          statsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const statsSection = document.querySelector('.hero-stats');
+    if (statsSection) statsObserver.observe(statsSection);
+
+    function animateStats() {
+      const statNums = document.querySelectorAll('.stat-num');
+      const duration = 1500;
+      const easeOut = t => 1 - Math.pow(1 - t, 3);
+
+      statNums.forEach(el => {
+        const text = el.textContent;
+        const match = text.match(/(\d+)(.+)/);
+        if (!match) return;
+
+        const target = parseInt(match[1]);
+        const suffix = match[2];
+        const startTime = performance.now();
+
+        function update(currentTime) {
+          const elapsed = currentTime - startTime;
+          const progress = Math.min(elapsed / duration, 1);
+          const easedProgress = easeOut(progress);
+          const current = Math.floor(target * easedProgress);
+
+          el.innerHTML = `${current}<span>${suffix}</span>`;
+
+          if (progress < 1) {
+            requestAnimationFrame(update);
+          } else {
+            el.innerHTML = `${target}<span>${suffix}</span>`;
+          }
+        }
+
+        requestAnimationFrame(update);
+      });
+    }
+
+    // 3. HOW IT WORKS CONNECTOR LINE
+    const stepsConnector = document.getElementById('steps-connector');
+    let stepsAnimated = false;
+    const stepsObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !stepsAnimated) {
+          stepsAnimated = true;
+          stepsConnector.classList.add('animate');
+          stepsObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const stepsSection = document.querySelector('.steps');
+    if (stepsSection) stepsObserver.observe(stepsSection);
+
+    // 4. APPOINTMENT PANEL STAGGERED REVEAL
+    let panelAnimated = false;
+    const panelObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !panelAnimated) {
+          panelAnimated = true;
+          const rows = entry.target.querySelectorAll('.metric-row');
+          rows.forEach((row, i) => {
+            setTimeout(() => {
+              row.classList.add('visible');
+            }, i * 70);
+          });
+          panelObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    const panel = document.querySelector('.panel');
+    if (panel) panelObserver.observe(panel);
+
+    // 5. CUSTOM CURSOR FOLLOWER
+    if (window.innerWidth >= 768) {
+      const cursor = document.getElementById('cursor-follower');
+      let mouseX = 0, mouseY = 0;
+      let cursorX = 0, cursorY = 0;
+
+      document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+      });
+
+      function updateCursor() {
+        cursorX += (mouseX - cursorX) * 0.1;
+        cursorY += (mouseY - cursorY) * 0.1;
+        cursor.style.left = cursorX + 'px';
+        cursor.style.top = cursorY + 'px';
+        requestAnimationFrame(updateCursor);
+      }
+      requestAnimationFrame(updateCursor);
+
+      const hoverElements = document.querySelectorAll('a, button, .btn-primary, .btn-ghost');
+      hoverElements.forEach(el => {
+        el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+        el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+      });
+    }
+
+    // 6. CTA BORDER ANIMATION
+    const ctaBorderSvg = document.getElementById('cta-border-svg');
+    const ctaRect = ctaBorderSvg.querySelector('rect');
+    const ctaRectLength = (680 + 400) * 2;
+    ctaRect.style.stroke = 'rgba(200,240,96,0.2)';
+    ctaRect.style.strokeWidth = '1';
+    ctaRect.style.fill = 'none';
+    ctaRect.style.strokeDasharray = ctaRectLength;
+    ctaRect.style.strokeDashoffset = ctaRectLength;
+
+    let ctaAnimated = false;
+    const ctaObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !ctaAnimated) {
+          ctaAnimated = true;
+          ctaRect.style.transition = 'stroke-dashoffset 1.2s ease-out';
+          ctaRect.style.strokeDashoffset = '0';
+          ctaObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.3 });
+
+    const ctaSection = document.querySelector('.cta-section');
+    if (ctaSection) ctaObserver.observe(ctaSection);
   </script>
 </body>
 </html>
