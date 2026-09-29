@@ -1028,6 +1028,69 @@
       margin-bottom: 0;
     }
 
+    .results-proof {
+      margin-top: 72px;
+    }
+
+    .results-proof-label {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 28px;
+    }
+
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      align-items: start;
+    }
+
+    .result-card {
+      margin: 0;
+      background: var(--bg-2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .result-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+    }
+
+    .result-card img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .result-note {
+      padding: 16px 18px 18px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    .result-note strong {
+      display: block;
+      color: var(--text);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 1100px) {
+      .results-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 560px) {
+      .results-grid { grid-template-columns: 1fr; }
+    }
+
     .testimonial-author {
       display: flex;
       flex-direction: column;
@@ -1533,6 +1596,28 @@
           <div class="author-name">Dr. Priya K.</div>
           <div class="author-role">Functional Health Coach</div>
         </div>
+      </div>
+    </div>
+
+    <div class="results-proof reveal">
+      <div class="results-proof-label">Real client dashboards</div>
+      <div class="results-grid">
+        <figure class="result-card">
+          <img src="assets/results/weekly-gross-volume.webp" alt="Client dashboard showing weekly gross volume of $36.5K, up 248.8% from $10.5K the week before" loading="lazy" width="920" height="740" />
+          <figcaption class="result-note"><strong>First week after launching their new campaign</strong>$36.5K in gross volume, up 248.8% on the week before.</figcaption>
+        </figure>
+        <figure class="result-card">
+          <img src="assets/results/dashboard-month-to-date.webp" alt="Client dashboard showing $23,825 in month to date gross volume, up 16.08% on the previous period" loading="lazy" width="920" height="750" />
+          <figcaption class="result-note"><strong>Client's 2nd month with Ripple</strong>$23.8K in gross volume, up 16% on their first month.</figcaption>
+        </figure>
+        <figure class="result-card">
+          <img src="assets/results/all-time-gross-volume.webp" alt="Client dashboard showing $13.6K all time gross volume and a $4,050 day" loading="lazy" width="828" height="890" />
+          <figcaption class="result-note"><strong>Client's first few months</strong>$13.6K in gross volume, capped off by a $4,050 day.</figcaption>
+        </figure>
+        <figure class="result-card">
+          <img src="assets/results/december-payments.webp" alt="List of successful client payments between $1,200 and $2,500 in December" loading="lazy" width="851" height="1335" />
+          <figcaption class="result-note"><strong>Client's holiday week</strong>$6,400 in successful payments from Dec 23 to 25 alone.</figcaption>
+        </figure>
       </div>
     </div>
   </section>
